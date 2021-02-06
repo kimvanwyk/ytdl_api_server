@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from datetime import datetime
+import os
 
 Base = declarative_base()
 
@@ -23,7 +24,7 @@ class Url(Base):
 
 @attr.s
 class DB:
-    sqlite_filename = attr.ib(default="db.sqlite3")
+    sqlite_filename = attr.ib(default=os.getenv("DB_FILE_PATH", "db.sqlite3"))
     debug = attr.ib(default=False)
 
     def __attrs_post_init__(self):
