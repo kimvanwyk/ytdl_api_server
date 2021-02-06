@@ -40,7 +40,7 @@ class DB:
         self.session.add(u)
         self.session.commit()
 
-    def get_undownloaded_urls(self):
+    def get_pending_urls(self):
         return {
             url.id: url.url
             for url in self.session.query(Url)
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     db = DB()
     db.add_url("foo")
     db.add_url("bar")
-    print(db.get_undownloaded_urls())
+    print(db.get_pending_urls())
