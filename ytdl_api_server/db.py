@@ -32,26 +32,31 @@ class DB:
             f"sqlite:///{self.sqlite_filename}", echo=self.debug
         )
         Base.metadata.create_all(self.engine)
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
+        self.session_base = sessionmaker(bind=self.engine)
+
+    def get_session(self):
+        return self.session_base()
 
     def add_url(self, url):
+        session = self.get_session()
         u = Url(url=url, timestamp_added=datetime.now())
-        self.session.add(u)
-        self.session.commit()
+        session.add(u)
+        session.commit()
 
     def get_pending_urls(self):
+        session = self.get_session()
         return {
             url.id: url.url
-            for url in self.session.query(Url)
+            for url in session.query(Url)
             .filter_by(timestamp_downloaded=None)
             .all()
         }
 
     def mark_url_downloaded(self, urlid):
-        urlq = self.session.query(Url).filter_by(id=urlid).first()
+        session = self.get_session()
+        urlq = session.query(Url).filter_by(id=urlid).first()
         urlq.timestamp_downloaded = datetime.now()
-        self.session.commit()
+        session.commit()
 
 if __name__ == "__main__":
     db = DB()

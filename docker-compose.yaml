@@ -1,0 +1,10 @@
+version: '3.2'
+
+services:
+   ytdl-api-server:
+     image: ytdl-api-server
+     restart: always
+     ports:
+       - "9200:80"
+     volumes:
+       - ./ytdl_api_server_db:/db

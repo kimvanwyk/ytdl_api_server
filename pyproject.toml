@@ -5,7 +5,7 @@ description = "Sqlite-based state tracking API server for ytdl downloads"
 authors = ["Kim van Wyk <kimv@sahomeloans.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 black = "^20.8b1"
 fastapi = "^0.63.0"
 uvicorn = "^0.13.3"
