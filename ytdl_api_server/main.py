@@ -11,6 +11,9 @@ DBH = DB()
 class UrlModel(BaseModel):
     url: str
 
+class UrlIdModel(BaseModel):
+    id: int
+
 
 @app.get("/urls/pending")
 def pending():
@@ -26,3 +29,10 @@ def add(url: UrlModel):
     '''
 
     DBH.add_url(url.url)
+
+@app.put("/urls/downloaded")
+def mark_downloaded(urlid: UrlIdModel):
+    ''' Update a URL ID as downloaded
+    '''
+
+    DBH.mark_url_downloaded(urlid.id)

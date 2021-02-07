@@ -48,6 +48,10 @@ class DB:
             .all()
         }
 
+    def mark_url_downloaded(self, urlid):
+        urlq = self.session.query(Url).filter_by(id=urlid).first()
+        urlq.timestamp_downloaded = datetime.now()
+        self.session.commit()
 
 if __name__ == "__main__":
     db = DB()
