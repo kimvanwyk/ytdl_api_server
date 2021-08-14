@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/kimvanwyk/fastapi-poetry-container
+FROM registry.gitlab.com/kimvanwyk/fastapi-poetry
 
 COPY ./ytdl_api_server/*.py /app/
 
