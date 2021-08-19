@@ -47,9 +47,7 @@ class DB:
         session = self.get_session()
         return {
             url.id: url.url
-            for url in session.query(Url)
-            .filter_by(timestamp_downloaded=None)
-            .all()
+            for url in session.query(Url).filter_by(timestamp_downloaded=None).all()
         }
 
     def mark_url_downloaded(self, urlid):
@@ -57,6 +55,12 @@ class DB:
         urlq = session.query(Url).filter_by(id=urlid).first()
         urlq.timestamp_downloaded = datetime.now()
         session.commit()
+
+    def delete_url(self, urlid):
+        session = self.get_session()
+        session.query(Url).filter_by(id=urlid).delete()
+        session.commit()
+
 
 if __name__ == "__main__":
     db = DB()
